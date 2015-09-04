@@ -13,7 +13,7 @@ db_namespace = namespace :db do
     if options[:config]
       @current_config = options[:config]
     else
-      @current_config ||= if ENV['DATABASE_URL']
+      @current_config ||= if ENV['PGBOUNCER_DATABASE_URL']
                             database_url_config
                           else
                             ActiveRecord::Base.configurations[options[:env]]
@@ -56,7 +56,7 @@ db_namespace = namespace :db do
 
   desc 'Create the database from DATABASE_URL or config/database.yml for the current Rails.env (use db:create:all to create all dbs in the config)'
   task :create => [:load_config, :rails_env] do
-    if ENV['DATABASE_URL']
+    if ENV['PGBOUNCER_DATABASE_URL']
       create_database(database_url_config)
     else
       configs_for_environment.each { |config| create_database(config) }
@@ -172,7 +172,7 @@ db_namespace = namespace :db do
 
   desc 'Drops the database using DATABASE_URL or the current Rails.env (use db:drop:all to drop all databases)'
   task :drop => [:load_config, :rails_env] do
-    if ENV['DATABASE_URL']
+    if ENV['PGBOUNCER_DATABASE_URL']
       drop_database_and_rescue(database_url_config)
     else
       configs_for_environment.each { |config| drop_database_and_rescue(config) }

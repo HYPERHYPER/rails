@@ -7,7 +7,7 @@ module ApplicationTests
     include Rack::Test::Methods
 
     def setup
-      @database_url = ENV['DATABASE_URL']
+      @database_url = ENV['PGBOUNCER_DATABASE_URL']
       ENV.delete('DATABASE_URL')
       build_app
       boot_rails
@@ -15,7 +15,7 @@ module ApplicationTests
 
     def teardown
       teardown_app
-      ENV['DATABASE_URL'] = @database_url
+      ENV['PGBOUNCER_DATABASE_URL'] = @database_url
     end
 
     test "blows up when no DATABASE_URL env var or database.yml" do
@@ -37,7 +37,7 @@ module ApplicationTests
     test "uses DATABASE_URL env var when config/database.yml doesn't exist" do
       database_path = "/db/foo.sqlite3"
       FileUtils.rm_rf("#{app_path}/config/database.yml")
-      ENV['DATABASE_URL'] = "sqlite3://#{database_path}"
+      ENV['PGBOUNCER_DATABASE_URL'] = "sqlite3://#{database_path}"
       simple_controller
 
       get '/foo'
@@ -49,7 +49,7 @@ module ApplicationTests
 
     test "DATABASE_URL env var takes precedence over config/database.yml" do
       database_path = "/db/foo.sqlite3"
-      ENV['DATABASE_URL'] = "sqlite3://#{database_path}"
+      ENV['PGBOUNCER_DATABASE_URL'] = "sqlite3://#{database_path}"
       simple_controller
 
       get '/foo'

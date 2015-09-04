@@ -20,7 +20,7 @@ module ApplicationTests
       end
 
       def set_database_url
-        ENV['DATABASE_URL'] = "sqlite3://:@localhost/#{database_url_db_name}"
+        ENV['PGBOUNCER_DATABASE_URL'] = "sqlite3://:@localhost/#{database_url_db_name}"
       end
 
       def expected
