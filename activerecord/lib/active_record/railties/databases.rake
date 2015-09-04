@@ -4,7 +4,7 @@ require 'active_record'
 db_namespace = namespace :db do
   def database_url_config
     @database_url_config ||=
-        ActiveRecord::Base::ConnectionSpecification::Resolver.new(ENV["DATABASE_URL"], {}).spec.config.stringify_keys
+        ActiveRecord::Base::ConnectionSpecification::Resolver.new(ENV["PGBOUNCER_DATABASE_URL"], {}).spec.config.stringify_keys
   end
 
   def current_config(options = {})
