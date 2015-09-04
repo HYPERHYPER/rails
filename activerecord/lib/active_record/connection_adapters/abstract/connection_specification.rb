@@ -125,7 +125,7 @@ module ActiveRecord
     #
     # The exceptions AdapterNotSpecified, AdapterNotFound and ArgumentError
     # may be returned on an error.
-    def self.establish_connection(spec = ENV["DATABASE_URL"])
+    def self.establish_connection(spec = ENV["PGBOUNCER_DATABASE_URL"])
       resolver = ConnectionSpecification::Resolver.new spec, configurations
       spec = resolver.spec
 
